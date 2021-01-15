@@ -5,9 +5,9 @@ LABEL "com.github.actions.description"="Convert TODO comments into issues"
 LABEL "com.github.actions.icon"="alert-circle"
 LABEL "com.github.actions.color"="gray-dark"
 
-LABEL "repository"="http://github.com/dtinth/todo-actions"
-LABEL "homepage"="http://github.com/dtinth/todo-actions"
-LABEL "maintainer"="dtinth <dtinth@spacet.me>"
+LABEL "repository"="http://github.com/floffah/todo-actions"
+LABEL "homepage"="http://github.com/floffah/todo-actions"
+LABEL "maintainer"="floffah <therealfloffah@gmail.com>"
 
 ENV GIT_COMMITTER_NAME=TODO
 ENV GIT_AUTHOR_NAME=TODO

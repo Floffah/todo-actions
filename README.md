@@ -2,6 +2,8 @@
 
 Turn TODO comments inside source code into GitHub issues and closes them when they are gone. Runs on GitHub Actions. This project is hugely inspired by [0pdd](https://www.yegor256.com/2017/04/05/pdd-in-action.html).
 
+**Please note** i am not planning on pull requesting these changes to master unless anyone really wants me to. this fork is just to add 2 features for one of my projects
+
 ## Features
 
 - Turns TODO comments into GitHub issues.
