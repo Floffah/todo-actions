@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
-import { logger, invariant } from 'tkt'
-import { execSync, execFileSync } from 'child_process'
+import { invariant, logger } from 'tkt'
+import { execFileSync, execSync } from 'child_process'
 import { IFile } from './types'
 import { File } from './File'
 
@@ -54,7 +54,7 @@ export async function scanCodeRepository(): Promise<CodeRepositoryState> {
     encoding: 'utf8',
   })
     .split('\n')
-    .filter(name => name)
+    .filter((name) => name)
   const files: IFile[] = []
   log.info('Parsing TODO tags...')
   for (const filePath of filesWithTodoMarker) {
@@ -64,7 +64,7 @@ export async function scanCodeRepository(): Promise<CodeRepositoryState> {
   return {
     files,
     async saveChanges(commitMessage) {
-      const changedFiles = files.filter(file => file.contents.changed)
+      const changedFiles = files.filter((file) => file.contents.changed)
       log.info('Files changed: %s', changedFiles.length)
       if (changedFiles.length === 0) {
         return
@@ -72,7 +72,7 @@ export async function scanCodeRepository(): Promise<CodeRepositoryState> {
       for (const file of changedFiles) {
         file.save()
       }
-      execFileSync('git', ['add', ...changedFiles.map(file => file.fileName)])
+      execFileSync('git', ['add', ...changedFiles.map((file) => file.fileName)])
       execFileSync('git', ['commit', '-m', commitMessage], {
         stdio: 'inherit',
       })

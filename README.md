@@ -93,6 +93,13 @@ You can get a free instance on [MongoDB Atlas](https://www.mongodb.com/cloud/atl
 
 5. Commit your changes. You should see the workflow running on GitHub under **Actions** tab.
 
+## Config
+
+These are optional config values that you can put under the "env" property (next to GITHUB_TOKEN)
+
+ - `LABEL_IDS` - a list of ids for labels that you want to add to issues that are separated by a comma, e.g.: `LABEL_IDS: 1234567890,1234567890`. You can get these IDS by opening this page: https://api.github.com/repos/{author}/{repo}/labels. Make sure you use the node_id property from this page
+ - `MILESTONE_ID` - the id of a milestone to add to the issue. e.g. `MILESTONE_ID: 1234567`. you can get the ids from this page: https://api.github.com/repos/{author}/{repo}/milestones. Make sure you use the node_id property from this page
+
 ## Development
 
 ### Glossary

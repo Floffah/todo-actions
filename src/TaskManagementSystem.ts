@@ -1,6 +1,7 @@
 import { invariant, logger } from 'tkt'
 
 import * as CodeRepository from './CodeRepository'
+import { ICreateIssueInput } from './types'
 
 const log = logger('TaskManagementSystem')
 
@@ -14,10 +15,26 @@ export async function createTask(
 ): Promise<string> {
   const graphql = require('@octokit/graphql').defaults({
     headers: {
-      authorization: `token ${process.env.GITHUB_TOKEN ||
-        invariant(false, 'Required GITHUB_TOKEN variable.')}`,
+      authorization: `token ${
+        process.env.GITHUB_TOKEN ||
+        invariant(false, 'Required GITHUB_TOKEN variable.')
+      }`,
     },
   })
+
+  const input: ICreateIssueInput = {
+    repositoryId: CodeRepository.repoContext.repositoryNodeId,
+    title: information.title,
+    body: information.body,
+  }
+
+  if (Object.prototype.hasOwnProperty.call(process.env, 'LABEL_IDS')) {
+    input.labelIds = (process.env.LABEL_IDS || '').split(',')
+  }
+  if (Object.prototype.hasOwnProperty.call(process.env, 'MILESTONE_ID')) {
+    input.milestoneId = process.env.MILESTONE_IDS || ''
+  }
+
   const result = await graphql(
     `
       mutation CreateIssue($input: CreateIssueInput!) {
@@ -28,13 +45,7 @@ export async function createTask(
         }
       }
     `,
-    {
-      input: {
-        repositoryId: CodeRepository.repoContext.repositoryNodeId,
-        title: information.title,
-        body: information.body,
-      },
-    },
+    { input },
   )
   log.debug('Create issue result:', result)
   return result.createIssue.issue.number
@@ -48,8 +59,10 @@ export async function createTask(
 export async function completeTask(taskReference: string): Promise<void> {
   const Octokit = (await import('@octokit/rest')).default
   const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_TOKEN ||
-      invariant(false, 'Required GITHUB_TOKEN variable.')}`,
+    auth: `token ${
+      process.env.GITHUB_TOKEN ||
+      invariant(false, 'Required GITHUB_TOKEN variable.')
+    }`,
   })
   const result = await octokit.issues.update({
     owner: CodeRepository.repoContext.repositoryOwner,
@@ -66,8 +79,10 @@ export async function updateTask(
 ): Promise<void> {
   const Octokit = (await import('@octokit/rest')).default
   const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_TOKEN ||
-      invariant(false, 'Required GITHUB_TOKEN variable.')}`,
+    auth: `token ${
+      process.env.GITHUB_TOKEN ||
+      invariant(false, 'Required GITHUB_TOKEN variable.')
+    }`,
   })
   const result = await octokit.issues.update({
     owner: CodeRepository.repoContext.repositoryOwner,

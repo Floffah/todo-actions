@@ -38,3 +38,11 @@ export interface ITodo {
 export interface ITaskState {
   hash: string
 }
+
+export interface ICreateIssueInput {
+  repositoryId: string
+  title: string
+  body: string
+  labelIds?: string[]
+  milestoneId?: string
+}
