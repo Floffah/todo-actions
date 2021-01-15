@@ -1,0 +1,8 @@
+name: todo-actions
+description: Convert TODO comment into issues
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: alert-circle
+  color: gray-dark
